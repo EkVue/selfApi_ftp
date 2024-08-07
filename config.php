@@ -2,10 +2,11 @@
 //session_start();
 /* DATABASE CONFIGURATION */
 
-define('DB_SERVER', 'localhost');  //193.35.152.20  //Self mysql database
+//define('DB_SERVER', 'localhost');  //Self mysql database
+define('DB_SERVER', '5.250.254.69');
 //define('DB_SERVER', '193.35.152.20');
 define('DB_USERNAME', 'softmed_user');
-define('DB_PASSWORD', 'Yymsfkqx157923');
+define('DB_PASSWORD', 'Yymsfkqx157923'); //Yymsfkqx157923
 define('DB_DATABASE', 'selfweb');   //selfweb  //selfelmabebe
 define("BASE_URL", ""); // Eg. http://yourwebsite.com
 
@@ -31,3 +32,5 @@ $xmailsender_user = 'noreply@selfmutabakat.com';
 $xmailsender_pass = 'GpqZmOLhLl';
 $xmailsender_port = 587;
 $xmailsender_secure = '';
+
+///

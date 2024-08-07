@@ -29,6 +29,8 @@ class dataClass
         $cdata->Id = 0;
         $cdata->_limit = 0;
         $cdata->_offset = 0;
+        // $cdata->_USERNAME = '';
+        // $cdata->_PASSWORD = '';
         $execData = json_decode($data, true);
         foreach ($execData["CRUD"] as $sd) {
             if ($sd["key"] == 'K') $cdata->K = $sd["value"];
@@ -37,6 +39,8 @@ class dataClass
             if ($sd["key"] == 'Id') $cdata->Id = $sd["value"];
             if ($sd["key"] == '_limit') $cdata->_limit = $sd["value"];
             if ($sd["key"] == '_offset') $cdata->_offset = $sd["value"];
+            // if ($sd["key"] == '_USERNAME') $cdata->_USERNAME = $sd["value"];
+            // if ($sd["key"] == '_PASSWORD') $cdata->_PASSWORD = $sd["value"];
         }
         //echo "'".$K."','".$Tc."',".$Ucode; 
         $cdata->Call = $execData["Call"];
@@ -53,8 +57,11 @@ class dataClass
                 " . $cdata->Ucode . ",
                 " . $cdata->Id . ",
                 " . $cdata->_limit . ",
-                " . $cdata->_offset . "                
+                " . $cdata->_offset . "     
+                
             )");
+            // ," . $cdata->_USERNAME . ",
+            // " . $cdata->_PASSWORD . "   
             //$stmt->bindParam("sp",$sp, PDO::PARAM_STR);
             $stmt->execute();
             $sdata =  $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -77,8 +84,10 @@ class dataClass
                 " . $cdata->Ucode . ",
                 " . $cdata->Id . ",
                 " . $cdata->_limit . ",
-                " . $cdata->_offset . "                
+                " . $cdata->_offset . "                   
             )");
+            // '" . $cdata->_USERNAME . "',
+            // '" . $cdata->_PASSWORD . "'   
             //$stmt->bindParam("sp",$sp, PDO::PARAM_STR);
             $stmt->execute();
             $sdata =  $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -386,12 +395,12 @@ class userClass
         $execData = json_decode($data, true);
         $cdate = new stdClass;
         $cdate->user = $execData["User"];
-        $cdate->pass = dataClass::decrypt($execData["Pass"]);
+        $cdate->pass = $execData["Pass"];
         $cdate->Token = $execData["Token"];
         $cdate->Time = $execData["Time"];
         $cdate->Sms = $execData["Sms"];
         $cdate->Section = dataClass::decrypt($execData["Section"]);
-        //var_dump($cdate);        
+        //var_dump($cdate);
 
         try {
             $db = getDB();
@@ -406,7 +415,8 @@ class userClass
             $Idata->NewRecordID = $sdata[0]->ID;
             $Idata->RecordCount = $sdata[0]->RecordCount;
             $Idata->Token = $sdata[0]->Token;
-            $Idata->URL = $cdate->pass;
+            $Idata->URL = str_replace("\r\n", "", str_replace(" ", "", $stmt->queryString)); //$cdata->Call; 
+            //$cdate->pass;
 
             if ($Idata->NewRecordID == 0 || $Idata->RecordCount == 0) {
                 $Idata->SonucKodu = "false";
