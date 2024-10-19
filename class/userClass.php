@@ -362,7 +362,11 @@ class userClass
             $sdata = $stmt->fetchAll(PDO::FETCH_OBJ);
             $Idata->NewRecordID = $sdata[0]->ID;
             $Idata->Token = $sdata[0]->UID;
-
+            
+            //12.09.2024 
+            $UserToken = new stdClass;            
+            $Idata->UserToken=$UserToken;
+            
             $Idata->UserToken->Status = "-1";
             $Idata->UserToken->Token = $sdata[0]->UID;
             $Idata->UserToken->User = $execData["User"];
